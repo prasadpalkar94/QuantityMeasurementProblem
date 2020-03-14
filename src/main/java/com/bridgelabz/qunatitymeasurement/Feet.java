@@ -30,7 +30,7 @@ public class Feet {
     }
 
     public boolean checkNull(Object object) {
-        if (object == null ) {
+        if (object == null) {
             return false;
         }
         return true;
@@ -45,6 +45,13 @@ public class Feet {
 
     public boolean checkType(Object object) {
         if (object.getClass() == this.getClass()) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean calculateInch(int i, int i1) {
+        if (i == i1) {
             return true;
         }
         return false;
