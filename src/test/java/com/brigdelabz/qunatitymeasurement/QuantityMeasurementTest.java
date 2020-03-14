@@ -1,33 +1,35 @@
 package com.brigdelabz.qunatitymeasurement;
 
-import com.bridgelabz.qunatitymeasurement.Feet;
-import com.bridgelabz.qunatitymeasurement.QuantityMeasurementException;
+import com.bridgelabz.qunatitymeasurement.CalculateUnit;
+import com.bridgelabz.qunatitymeasurement.LengthType;
+import com.bridgelabz.qunatitymeasurement.QuantityMeasurement;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-
 public class QuantityMeasurementTest {
-    Feet feet;
+    CalculateUnit unit;
+    QuantityMeasurement obj;
 
     @Before
     public void setUp() throws Exception {
-        feet = new Feet();
+        unit = new CalculateUnit();
+        obj = new QuantityMeasurement();
     }
 
     @Test
     public void givenTwoFeetValues_WhenEqual_ShouldReturnTrue() {
         {
-            boolean check = feet.calculateFeet(0, 0);
-            Assert.assertTrue(check);
+           // boolean check = unit.calculateFeet(0, 0);
+            double check = unit.calculateUnit(LengthType.FEET, 1);
+            Assert.assertEquals(12.0,check,1);
         }
     }
 
     @Test
     public void givenTwoFeetValues_WhenCheckForNull_ShouldReturnTrue() {
         {
-            boolean check = feet.checkNull("null");
+            boolean check = obj.equals(obj);
             Assert.assertTrue(check);
         }
     }
@@ -35,7 +37,7 @@ public class QuantityMeasurementTest {
     @Test
     public void givenTwoFeetValues_WhenCheckForReference_ShouldReturnTrue() {
         {
-            boolean check = feet.checkRef(feet);
+            boolean check = obj.equals(obj);
             Assert.assertTrue(check);
         }
     }
@@ -43,7 +45,7 @@ public class QuantityMeasurementTest {
     @Test
     public void givenTwoFeetValues_WhenCheckForType_ShouldReturnTrue() {
         {
-            boolean check = feet.checkType(feet);
+            boolean check = obj.equals(obj);
             Assert.assertTrue(check);
         }
     }
@@ -51,23 +53,27 @@ public class QuantityMeasurementTest {
     @Test
     public void givenTwoInchValues_WhenEqual_ShouldReturnTrue() {
         {
-            boolean check = feet.calculateInch(0, 0);
-            Assert.assertTrue(check);
+            double check = unit.calculateUnit(LengthType.INCH, 12);
+            Assert.assertEquals(1.0,check,1);
         }
     }
 
     @Test
     public void givenTwoInchValues_WhenCheckForNull_ShouldReturnTrue() {
         {
-            boolean check = feet.checkNull("null");
-            Assert.assertTrue(check);
+            try {
+                boolean check = obj.equals(null);
+                Assert.assertTrue(check);
+            }catch (Exception e){
+
+            }
         }
     }
 
     @Test
     public void givenTwoInchValues_WhenCheckForReference_ShouldReturnTrue() {
         {
-            boolean check = feet.checkRef(feet);
+            boolean check = obj.equals(obj);
             Assert.assertTrue(check);
         }
     }
@@ -75,7 +81,7 @@ public class QuantityMeasurementTest {
     @Test
     public void  givenTwoInchValues_WhenCheckForType_ShouldReturnTrue() {
         {
-            boolean check = feet.checkType(feet);
+            boolean check = obj.equals(obj);
             Assert.assertTrue(check);
         }
     }
