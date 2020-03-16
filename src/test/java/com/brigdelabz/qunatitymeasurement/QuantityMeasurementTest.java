@@ -222,5 +222,18 @@ public class QuantityMeasurementTest {
         double inch2 = obj.calculateUnit(LengthType.CM_TO_INCH, 2.5);
         Assert.assertEquals(3.0, (inch1 + inch2), 1);
     }
+
+    @Test
+    public void given1GallonAnd3Point78Litre_WhenEqual_ShouldReturnTrue() {
+        double gallon = obj.calculateUnit(LengthType.GALLON, 1.0);
+        double litre = obj.calculateUnit(LengthType.LITRE, 3.785);
+        Assert.assertEquals(gallon, litre, 1);
+    }
+    @Test
+    public void given1LitreAnd1000Millilitre_WhenEqual_ShouldReturnTrue() {
+        double litre = obj.calculateUnit(LengthType.LITRE_TO_ML, 1.0);
+        double millilitre = obj.calculateUnit(LengthType.MILLILITRE, 1000.0);
+        Assert.assertEquals(litre, millilitre, 0.0);
+    }
 }
 
