@@ -10,7 +10,6 @@ public class CalculateUnit {
         if (type.equals(LengthType.INCH)) {
             unit = unit / 12;
             return unit;
-
         }
         return unit;
     }
