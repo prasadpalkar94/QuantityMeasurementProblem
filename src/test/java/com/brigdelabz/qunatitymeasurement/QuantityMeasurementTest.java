@@ -269,6 +269,12 @@ public class QuantityMeasurementTest {
         double grams = obj.calculateUnit(LengthType.GRAMS_TO_KG, 1000.0);       //1
         Assert.assertEquals(1001, (tonne + grams), 0.0);
     }
+
+    @Test
+    public void given212FahrenheitAnd100Celsius_WhenEqual_ShouldReturnTrue() {
+        double temperature = obj.calculateUnit(LengthType.FAHRENHEIT_TO_CELSIUS, 212.0);
+        Assert.assertEquals(100.0, temperature, 0.0);
+    }
 }
 
 

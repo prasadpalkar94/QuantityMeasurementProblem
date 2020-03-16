@@ -6,7 +6,8 @@ public enum LengthType {
     INCH_TO_CM(1 * 2.54), CM_TO_INCH(1 / 2.54),
     INCH_TO_INCH(1), GALLON(1 * 3.785), LITRE(1),
     LITRE_TO_ML(1 * 1000.0), MILLILITRE_TO_LTR(1 / 1000.0),
-    KG_TO_GRAMS(1 * 1000.0), TONNE_TO_KG(1 * 1000), GRAMS_TO_KG(1 / 1000.0);
+    KG_TO_GRAMS(1 * 1000.0), TONNE_TO_KG(1 * 1000), GRAMS_TO_KG(1 / 1000.0),
+    FAHRENHEIT_TO_CELSIUS((212 - 32) * 0.5555 );
 
     public final double unit;
 
