@@ -7,10 +7,6 @@ public class QuantityMeasurement {
 
     }
 
-    public QuantityMeasurement(int value) {
-        this.value = value;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -22,5 +18,4 @@ public class QuantityMeasurement {
         QuantityMeasurement obj = (QuantityMeasurement) o;
         return Double.compare(obj.value, value) == 0;
     }
-
 }
