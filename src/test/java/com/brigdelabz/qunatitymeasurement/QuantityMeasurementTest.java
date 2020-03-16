@@ -155,7 +155,7 @@ public class QuantityMeasurementTest {
 
     @Test
     public void givenThreeFeet_WhenEqualsToOneYard_ShouldReturnTrue() {
-        double feet=obj.calculateUnit(LengthType.FEET_TO_YARD,3);
+        double feet = obj.calculateUnit(LengthType.FEET_TO_YARD, 3);
         Assert.assertEquals(1.0, feet, 1);
     }
 
@@ -163,14 +163,14 @@ public class QuantityMeasurementTest {
     public void givenConversionOfFeetToYard_WhenSameValue_ShouldReturnFalse() {
         double feet = obj.calculateUnit(LengthType.FEET, 1);
         double inch = obj.calculateUnit(LengthType.YARD, 1);
-        Assert.assertNotEquals(feet,inch,0.0);
+        Assert.assertNotEquals(feet, inch, 0.0);
     }
 
     @Test
     public void givenConversionOfInchToYard_WhenSameValue_ShouldReturnFalse() {
         double inch = obj.calculateUnit(LengthType.INCH, 1);
         double yard = obj.calculateUnit(LengthType.YARD, 1);
-        Assert.assertNotEquals(inch,yard,0.0);
+        Assert.assertNotEquals(inch, yard, 0.0);
     }
 
     @Test
@@ -187,13 +187,40 @@ public class QuantityMeasurementTest {
 
     @Test
     public void givenOneYard_WhenEqualsToThreeFeet_ShouldReturnTrue() {
-        double feet=obj.calculateUnit(LengthType.YARD_TO_FEET,1);
+        double feet = obj.calculateUnit(LengthType.YARD_TO_FEET, 1);
         Assert.assertEquals(3.0, feet, 1);
     }
 
     @Test
     public void givenInchToCmConversion_whenProper_ShouldReturnTrue() {
         double cm = obj.calculateUnit(LengthType.INCH_TO_CM, 2);
-        Assert.assertEquals(5,cm,1);
+        Assert.assertEquals(5, cm, 1);
+    }
+
+    @Test
+    public void givenTwoInchAndTwoInch_WhenAdded_ShouldReturnFourInches() {
+        double inch1 = obj.calculateUnit(LengthType.INCH_TO_INCH, 2);
+        Assert.assertEquals(4, (inch1 + inch1), 0.0);
+    }
+
+    @Test
+    public void given1FeetAnd2Inch_WhenEqualTo14Inch_ShouldReturnTrue() {
+        double inch1 = obj.calculateUnit(LengthType.FEET, 1.0);
+        double inch2 = obj.calculateUnit(LengthType.INCH_TO_INCH, 2.0);
+        Assert.assertEquals(14.0, (inch1 + inch2), 0.0);
+    }
+
+    @Test
+    public void given1FeetAnd1Feet_WhenEqualTo24Inch_ShouldReturnTrue() {
+        double inch1 = obj.calculateUnit(LengthType.FEET, 1.0);
+        Assert.assertEquals(24.0, (inch1 + inch1), 0.0);
+    }
+
+    @Test
+    public void given2InchAnd2Point5Centimeter_WhenEqualTo3Inch_ShouldReturnTrue() {
+        double inch1 = obj.calculateUnit(LengthType.INCH_TO_INCH, 2.0);
+        double inch2 = obj.calculateUnit(LengthType.CM_TO_INCH, 2.5);
+        Assert.assertEquals(3.0, (inch1 + inch2), 1);
     }
 }
+
