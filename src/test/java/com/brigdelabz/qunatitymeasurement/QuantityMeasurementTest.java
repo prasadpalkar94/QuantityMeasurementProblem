@@ -229,6 +229,7 @@ public class QuantityMeasurementTest {
         double litre = obj.calculateUnit(LengthType.LITRE, 3.785);
         Assert.assertEquals(gallon, litre, 1);
     }
+
     @Test
     public void given1LitreAnd1000Millilitre_WhenEqual_ShouldReturnTrue() {
         double litre = obj.calculateUnit(LengthType.LITRE_TO_ML, 1.0);
@@ -238,16 +239,35 @@ public class QuantityMeasurementTest {
 
     @Test
     public void given1GallonAnd3Point78Litre_WhenEqualTo7Point57Litre_ShouldReturnTrue() {
-       double litre1= obj.calculateUnit(LengthType.GALLON, 1.0);
-        double litre2= obj.calculateUnit(LengthType.LITRE, 3.785);
-        Assert.assertEquals(7.57,(litre1+litre2),0.0);
+        double litre1 = obj.calculateUnit(LengthType.GALLON, 1.0);
+        double litre2 = obj.calculateUnit(LengthType.LITRE, 3.785);
+        Assert.assertEquals(7.57, (litre1 + litre2), 0.0);
     }
 
     @Test
     public void given1LitreAnd1000Millilitre_WhenEqualTo2Litre_ShouldReturnTrue() {
-        double litre1= obj.calculateUnit(LengthType.LITRE, 1.0);
-        double litre2= obj.calculateUnit(LengthType.MILLILITRE_TO_LTR, 1000.0);
-        Assert.assertEquals(2.0,(litre1+litre2),0.0);
+        double litre1 = obj.calculateUnit(LengthType.LITRE, 1.0);
+        double litre2 = obj.calculateUnit(LengthType.MILLILITRE_TO_LTR, 1000.0);
+        Assert.assertEquals(2.0, (litre1 + litre2), 0.0);
+    }
+
+    @Test
+    public void given1KgAnd1000Grams_WhenEqual_ShouldReturnTrue() {
+        double gram = obj.calculateUnit(LengthType.KG_TO_GRAMS, 1.0);
+        Assert.assertEquals(1000, gram, 0.0);
+    }
+
+    @Test
+    public void given1TonnesAnd1000Kgs_WhenEqual_ShouldReturnTrue() {
+        double kg = obj.calculateUnit(LengthType.TONNE_TO_KG, 1.0);
+        Assert.assertEquals(1000, kg, 0.0);
+    }
+
+    @Test
+    public void given1TonneAnd1000Grams_WhenEqualTo1001Kg_ShouldReturnTrue() {
+        double tonne = obj.calculateUnit(LengthType.TONNE_TO_KG, 1.0);       //1000
+        double grams = obj.calculateUnit(LengthType.GRAMS_TO_KG, 1000.0);       //1
+        Assert.assertEquals(1001, (tonne + grams), 0.0);
     }
 }
 
