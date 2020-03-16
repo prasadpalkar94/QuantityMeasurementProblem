@@ -191,4 +191,9 @@ public class QuantityMeasurementTest {
         Assert.assertEquals(3.0, feet, 1);
     }
 
+    @Test
+    public void givenInchToCmConversion_whenProper_ShouldReturnTrue() {
+        double cm = obj.calculateUnit(LengthType.INCH_TO_CM, 2);
+        Assert.assertEquals(5,cm,1);
+    }
 }
