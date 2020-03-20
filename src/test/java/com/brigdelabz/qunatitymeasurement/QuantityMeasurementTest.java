@@ -2,159 +2,165 @@ package com.brigdelabz.qunatitymeasurement;
 
 import com.bridgelabz.qunatitymeasurement.QuantityMeasurement;
 import com.bridgelabz.qunatitymeasurement.QuantityMeasurementException;
-import com.bridgelabz.qunatitymeasurement.UnitOfTemperature;
 import com.bridgelabz.qunatitymeasurement.UnitType;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class QuantityMeasurementTest {
+    QuantityMeasurement quantityMeasurement;
+    //var declaration
+    double feetValue1,feetValue2,inchValue1,inchValue2,feetValue, inchValue,gramValue,celsius,
+            kilogram,grams,yard,inch,tonne,centimeter,litre,gallon,miliLitire;
+
+    @Before
+    public void setUp() {
+        quantityMeasurement = new QuantityMeasurement();
+    }
 
     @Test
     public void givenTwoFeetValues_WhenSame_ShouldReturnTrue() {
-        QuantityMeasurement feetValue1 = new QuantityMeasurement(0.0, UnitType.FEET);
-        QuantityMeasurement feetValue2 = new QuantityMeasurement(0.0, UnitType.FEET);
-        Assert.assertEquals(feetValue1,feetValue2);
+        feetValue1 = quantityMeasurement.convertValue(UnitType.FEET, 0.0);
+        feetValue2 = quantityMeasurement.convertValue(UnitType.FEET, 0.0);
+        Assert.assertEquals(feetValue1, feetValue2, 0.0);
     }
 
     @Test
     public void givenTwoFeetValues_WhenNotEqual_ShouldReturnTrue() {
-        QuantityMeasurement feetValue1 = new QuantityMeasurement(0.0, UnitType.FEET);
-        QuantityMeasurement feetValue2 = new QuantityMeasurement(5.0, UnitType.FEET);
-        Assert.assertNotEquals(feetValue1,feetValue2);
+        feetValue1 = quantityMeasurement.convertValue(UnitType.FEET, 0.0);
+        feetValue2 = quantityMeasurement.convertValue(UnitType.FEET, 5.0);
+        Assert.assertNotEquals(feetValue1, feetValue2);
     }
 
     @Test
     public void givenTwoInchValues_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement inchValue1 = new QuantityMeasurement(0.0, UnitType.INCH);
-        QuantityMeasurement inchValue2 = new QuantityMeasurement(0.0, UnitType.INCH);
-        Assert.assertEquals(inchValue1, inchValue2);
+        inchValue1 = quantityMeasurement.convertValue(UnitType.INCH, 0.0);
+        inchValue2 = quantityMeasurement.convertValue(UnitType.INCH, 0.0);
+        Assert.assertEquals(inchValue1, inchValue2, 0.0);
     }
 
     @Test
     public void givenTwoInchValues_WhenNotEqual_ShouldReturnFalse() {
-        QuantityMeasurement inchValue1 = new QuantityMeasurement(12.0, UnitType.INCH);
-        QuantityMeasurement inchValue2 = new QuantityMeasurement(0.0, UnitType.INCH);
+        inchValue1 = quantityMeasurement.convertValue(UnitType.INCH, 0.0);
+        inchValue2 = quantityMeasurement.convertValue(UnitType.INCH, 5.0);
         Assert.assertNotEquals(inchValue1, inchValue2);
     }
 
     @Test
     public void givenFeetAndInch_WhenZero_ShouldReturnEqual() {
-        QuantityMeasurement feetValue = new QuantityMeasurement(0.0, UnitType.FEET);
-        QuantityMeasurement inchValue = new QuantityMeasurement(0.0, UnitType.INCH);
-        boolean compare = feetValue.compare(inchValue);
+        feetValue = quantityMeasurement.convertValue(UnitType.FEET, 0.0);
+        inchValue = quantityMeasurement.convertValue(UnitType.INCH, 0.0);
+        boolean compare = quantityMeasurement.compare(inchValue, feetValue);
         Assert.assertTrue(compare);
     }
 
-
     @Test
     public void givenNullObjectReference_WhenEqual_ShouldReturnFalse() {
-        QuantityMeasurement inchValue1 = new QuantityMeasurement(12.0, UnitType.INCH);
-        QuantityMeasurement inchValue2 = new QuantityMeasurement(0.0, null);
-        Assert.assertFalse(inchValue1.equals(inchValue2));
+        try {
+            boolean checkNull = quantityMeasurement.equals(null);
+            Assert.assertFalse( checkNull);
+        } catch (NullPointerException e) {
+            Assert.assertEquals(null, e.getMessage());
+        }
     }
 
     @Test
     public void givenType_WhenNotEqual_ShouldReturnFalse() {
-        QuantityMeasurement inchValue = new QuantityMeasurement(12.0, UnitType.INCH);
-        QuantityMeasurement gramValue = new QuantityMeasurement(12.0, UnitType.GRAM);
+        inchValue = quantityMeasurement.convertValue(UnitType.INCH, 12.0);
+        gramValue = quantityMeasurement.convertValue(UnitType.GRAM, 12.0);
         Assert.assertNotEquals(inchValue, gramValue);
     }
 
     @Test
     public void givenSameReferenceForSameClass_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement inchValue = new QuantityMeasurement(12.0, UnitType.INCH);
-        Assert.assertTrue(inchValue.equals(inchValue));
+        boolean checkEqual = quantityMeasurement.equals(quantityMeasurement);
+        Assert.assertTrue(checkEqual);
     }
 
     @Test
     public void given1FeetAnd1Inch_WhenNotEqual_ShouldReturnFalse() {
-        QuantityMeasurement inchValue = new QuantityMeasurement(1.0, UnitType.INCH);
-        QuantityMeasurement feetValue = new QuantityMeasurement(1.0, UnitType.FEET);
-        Assert.assertNotEquals(feetValue,inchValue);
+        inchValue = quantityMeasurement.convertValue(UnitType.INCH, 1.0);
+        feetValue = quantityMeasurement.convertValue(UnitType.FEET, 1.0);
+        Assert.assertNotEquals(feetValue, inchValue);
     }
-
 
     @Test
     public void given1Feet12Inch_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement feet = new QuantityMeasurement(1.0, UnitType.FEET);
-        QuantityMeasurement inch = new QuantityMeasurement(12.0, UnitType.INCH);
-        boolean compare = feet.compare(inch);
+        feetValue = quantityMeasurement.convertValue(UnitType.FEET, 1.0);
+        inchValue = quantityMeasurement.convertValue(UnitType.INCH, 12.0);
+        boolean compare = quantityMeasurement.compare(feetValue, inchValue);
         Assert.assertTrue(compare);
     }
-
 
     @Test
     public void given12Inch1Feet_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement inch = new QuantityMeasurement(12.0, UnitType.INCH);
-        QuantityMeasurement feet = new QuantityMeasurement(1.0, UnitType.FEET);
-        boolean compare = inch.compare(feet);
+        inchValue = quantityMeasurement.convertValue(UnitType.INCH, 12.0);
+        feetValue = quantityMeasurement.convertValue(UnitType.FEET, 1.0);
+        boolean compare = quantityMeasurement.compare(inchValue, feetValue);
         Assert.assertTrue(compare);
     }
 
-
     @Test
     public void given1Feet1Yard_WhenNotEqual_ShouldReturnFalse() {
-        QuantityMeasurement yard = new QuantityMeasurement(1.0, UnitType.YARD);
-        QuantityMeasurement feet = new QuantityMeasurement(1.0, UnitType.FEET);
-        Assert.assertNotEquals(yard, feet);
+        yard = quantityMeasurement.convertValue(UnitType.YARD, 1.0);
+        feetValue = quantityMeasurement.convertValue(UnitType.FEET, 1.0);
+        Assert.assertNotEquals(yard, feetValue);
     }
 
     @Test
     public void given1Inch1Yard_WhenNotEqual_ShouldReturnFalse() {
 
-        QuantityMeasurement yard = new QuantityMeasurement(1.0, UnitType.YARD);
-        QuantityMeasurement inch = new QuantityMeasurement(1.0, UnitType.INCH);
+        yard = quantityMeasurement.convertValue(UnitType.YARD, 1.0);
+        inch = quantityMeasurement.convertValue(UnitType.INCH, 1.0);
         Assert.assertNotEquals(yard, inch);
     }
 
     @Test
     public void given1Yard36Inch_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement yard = new QuantityMeasurement(1.0, UnitType.YARD);
-        QuantityMeasurement inch = new QuantityMeasurement(36.0, UnitType.INCH);
-        boolean compare = yard.compare(inch);
+        yard = quantityMeasurement.convertValue(UnitType.YARD, 1.0);
+        inch = quantityMeasurement.convertValue(UnitType.INCH, 36.0);
+        boolean compare = quantityMeasurement.compare(yard, inch);
         Assert.assertTrue(compare);
     }
 
     @Test
     public void given36Inch1Yard_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement yard = new QuantityMeasurement(1.0, UnitType.YARD);
-        QuantityMeasurement inch = new QuantityMeasurement(13.0, UnitType.INCH);
+        yard = quantityMeasurement.convertValue(UnitType.YARD, 1.0);
+        inch = quantityMeasurement.convertValue(UnitType.INCH, 1.0);
         Assert.assertNotEquals(inch, yard);
     }
 
     @Test
     public void given1Yard3Feet_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement yard = new QuantityMeasurement(1.0, UnitType.YARD);
-        QuantityMeasurement feet = new QuantityMeasurement(13.0, UnitType.FEET);
-        Assert.assertNotEquals(feet, yard);
+        yard = quantityMeasurement.convertValue(UnitType.YARD, 1.0);
+        feetValue = quantityMeasurement.convertValue(UnitType.FEET, 13.0);
+        Assert.assertNotEquals(feetValue, yard);
     }
 
     @Test
     public void given3Feet1Yard_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement yard = new QuantityMeasurement(1.0,UnitType.YARD);
-        QuantityMeasurement feet = new QuantityMeasurement(3.0, UnitType.FEET);
-        boolean compare = yard.compare(feet);
+        yard = quantityMeasurement.convertValue(UnitType.YARD, 1.0);
+        feetValue = quantityMeasurement.convertValue(UnitType.FEET, 3.0);
+        boolean compare = quantityMeasurement.compare(yard, feetValue);
         Assert.assertTrue(compare);
     }
 
     @Test
     public void given2Inch5CM_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement centimeter = new QuantityMeasurement(5.0, UnitType.CENTI_METER);
-        QuantityMeasurement inch = new QuantityMeasurement(2.0, UnitType.INCH);
-        boolean compare = centimeter.compare(inch);
+        centimeter = quantityMeasurement.convertValue(UnitType.CENTI_METER, 5.0);
+        inch = quantityMeasurement.convertValue(UnitType.INCH, 2.0);
+        boolean compare = quantityMeasurement.compare(inch, centimeter);
         Assert.assertTrue(compare);
     }
 
     @Test
     public void givenAdditionOf2InchAnd2Inch_WhenEqual_ShouldReturnTrue() {
         try {
-            QuantityMeasurement inch1 = new QuantityMeasurement(2.0, UnitType.INCH);
-            QuantityMeasurement inch2 = new QuantityMeasurement(2.0, UnitType.INCH);
-            double result = inch1.additionOfTwoUnits(inch2);
+            double inch1 = quantityMeasurement.convertValue(UnitType.INCH, 2.0);
+            double inch2 = quantityMeasurement.convertValue(UnitType.INCH, 2.0);
+            double result = quantityMeasurement.addition(inch1, inch2);
             Assert.assertEquals(4.0, result, 0.0);
-        }
-        catch (QuantityMeasurementException e)
-        {
+        } catch (QuantityMeasurementException e) {
             e.printStackTrace();
         }
     }
@@ -162,12 +168,11 @@ public class QuantityMeasurementTest {
     @Test
     public void givenAdditionOf1Feet2Inch_WhenEqual_ShouldReturnTrue() {
         try {
-            QuantityMeasurement inch = new QuantityMeasurement(2.0, UnitType.INCH);
-            QuantityMeasurement feet = new QuantityMeasurement(1.0, UnitType.FEET);
-            double result = inch.additionOfTwoUnits(feet);
+            inchValue = quantityMeasurement.convertValue(UnitType.INCH, 2.0);
+            feetValue = quantityMeasurement.convertValue(UnitType.FEET, 1.0);
+            double result = quantityMeasurement.addition(inchValue, feetValue);
             Assert.assertEquals(14.0, result, 0.0);
-        } catch (QuantityMeasurementException e)
-        {
+        } catch (QuantityMeasurementException e) {
             e.printStackTrace();
         }
     }
@@ -175,12 +180,11 @@ public class QuantityMeasurementTest {
     @Test
     public void givenAdditionOf1Feet1Feet_WhenEqual_ShouldReturnTrue() {
         try {
-            QuantityMeasurement inch = new QuantityMeasurement(1.0, UnitType.FEET);
-            QuantityMeasurement feet = new QuantityMeasurement(1.0, UnitType.FEET);
-            double result = inch.additionOfTwoUnits(feet);
+            inchValue = quantityMeasurement.convertValue(UnitType.FEET, 1.0);
+            feetValue = quantityMeasurement.convertValue(UnitType.FEET, 1.0);
+            double result = quantityMeasurement.addition(inchValue, feetValue);
             Assert.assertEquals(24.0, result, 0.0);
-        } catch (QuantityMeasurementException e)
-        {
+        } catch (QuantityMeasurementException e) {
             e.printStackTrace();
         }
     }
@@ -188,33 +192,31 @@ public class QuantityMeasurementTest {
     @Test
     public void givenAdditionOfInchAndCentimeter_WhenEqual_ShouldReturnTrue() {
         try {
-            QuantityMeasurement inch = new QuantityMeasurement(2.0, UnitType.INCH);
-            QuantityMeasurement centimeter = new QuantityMeasurement(2.5, UnitType.CENTI_METER);
-            double result = inch.additionOfTwoUnits(centimeter);
+            inchValue = quantityMeasurement.convertValue(UnitType.INCH, 2.0);
+            centimeter = quantityMeasurement.convertValue(UnitType.CENTI_METER, 2.5);
+            double result = quantityMeasurement.addition(inchValue, centimeter);
             Assert.assertEquals(3.0, result, 0.0);
-        } catch (QuantityMeasurementException e)
-        {
+        } catch (QuantityMeasurementException e) {
             e.printStackTrace();
         }
     }
 
     @Test
     public void givenGallonAndLitres_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement litre = new QuantityMeasurement(3.78, UnitType.LITRE);
-        QuantityMeasurement gallon = new QuantityMeasurement(1.0, UnitType.GALLON);
-        boolean compare = litre.compare(gallon);
+        litre = quantityMeasurement.convertValue(UnitType.LITRE, 3.78);
+        gallon = quantityMeasurement.convertValue(UnitType.GALLON, 1.0);
+        boolean compare = quantityMeasurement.compare(litre, gallon);
         Assert.assertTrue(compare);
     }
 
     @Test
     public void givenLitreAndMilliLitre_WhenEqual_ShouldReturnTrue() {
         try {
-            QuantityMeasurement litre = new QuantityMeasurement(3.78, UnitType.LITRE);
-            QuantityMeasurement gallon = new QuantityMeasurement(1.0, UnitType.GALLON);
-            double result = gallon.additionOfTwoUnits(litre);
+            litre = quantityMeasurement.convertValue(UnitType.LITRE, 3.78);
+            gallon = quantityMeasurement.convertValue(UnitType.GALLON, 1.0);
+            double result = quantityMeasurement.addition(gallon, litre);
             Assert.assertEquals(7.56, result, 0.0);
-        } catch (QuantityMeasurementException e)
-        {
+        } catch (QuantityMeasurementException e) {
             e.printStackTrace();
         }
     }
@@ -222,54 +224,49 @@ public class QuantityMeasurementTest {
     @Test
     public void givenAdditionOfGallonAndLitre_WhenEqual_ShouldReturnTrue() {
         try {
-            QuantityMeasurement litre = new QuantityMeasurement(1.0, UnitType.LITRE);
-            QuantityMeasurement miliLitire = new QuantityMeasurement(100.0, UnitType.MILLI_LITRE);
-            double result = miliLitire.additionOfTwoUnits(litre);
+            litre = quantityMeasurement.convertValue(UnitType.LITRE, 1.0);
+            miliLitire = quantityMeasurement.convertValue(UnitType.MILLI_LITRE, 100.0);
+            double result = quantityMeasurement.addition(litre, miliLitire);
             Assert.assertEquals(1.1, result, 0.0);
-        } catch (QuantityMeasurementException e)
-        {
+        } catch (QuantityMeasurementException e) {
             e.printStackTrace();
         }
     }
 
-
     @Test
     public void givenKGAndGrams_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement kilogram = new QuantityMeasurement(1.0, UnitType.KILOGRAM);
-        QuantityMeasurement grams = new QuantityMeasurement(1000.0, UnitType.GRAM);
-        boolean compare = kilogram.compare(grams);
+        kilogram = quantityMeasurement.convertValue(UnitType.KILOGRAM, 1.0);
+        grams = quantityMeasurement.convertValue(UnitType.GRAM, 1000.0);
+        boolean compare = quantityMeasurement.compare(kilogram, grams);
         Assert.assertTrue(compare);
     }
 
     @Test
     public void givenTonneAndKG_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement tonne = new QuantityMeasurement(1.0, UnitType.TONNE);
-        QuantityMeasurement kilogram = new QuantityMeasurement(1000.0, UnitType.KILOGRAM);
-        boolean compare = kilogram.compare(tonne);
+        tonne = quantityMeasurement.convertValue(UnitType.TONNE, 1.0);
+        kilogram = quantityMeasurement.convertValue(UnitType.KILOGRAM, 1000.0);
+        boolean compare = quantityMeasurement.compare(kilogram, tonne);
         Assert.assertTrue(compare);
     }
 
     @Test
     public void givenAdditionOfTonneAndGrams_WhenEqual_ShouldReturnTrue() {
         try {
-            QuantityMeasurement tonne = new QuantityMeasurement(1.0, UnitType.TONNE);
-            QuantityMeasurement grams = new QuantityMeasurement(1000.0, UnitType.GRAM);
-            double result = grams.additionOfTwoUnits(tonne);
+            tonne = quantityMeasurement.convertValue(UnitType.TONNE, 1.0);
+            grams = quantityMeasurement.convertValue(UnitType.GRAM, 1000.0);
+            double result = quantityMeasurement.addition(tonne, grams);
             Assert.assertEquals(1001.0, result, 0.0);
-        } catch (QuantityMeasurementException e)
-        {
+        } catch (QuantityMeasurementException e) {
             e.printStackTrace();
         }
     }
 
     @Test
     public void givenCelsiusAndFahrenheit_WhenEqual_ShouldReturnTrue() {
-        QuantityMeasurement fahrenheit = new QuantityMeasurement(212.0, UnitOfTemperature.FAHRENHEIT);
-        QuantityMeasurement celsius = new QuantityMeasurement(100.0, UnitOfTemperature.CELSIUS);
-        boolean compare = fahrenheit.compare(celsius);
-        Assert.assertTrue(compare);
-    }
 
+        celsius = quantityMeasurement.convertValue(UnitType.FAHRENHEIT, 212.0);
+        Assert.assertEquals(100, celsius, 0.0);
+    }
 
 }
 

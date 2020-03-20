@@ -1,42 +1,28 @@
 package com.bridgelabz.qunatitymeasurement;
 
-public class QuantityMeasurement {
+public class QuantityMeasurement implements Unit{
 
-    private Double value;
-    private final Unit unit;
+    private double value;
 
-    public QuantityMeasurement(Double value, Unit unit)
-    {
-        this.value = value;
-        this.unit = unit;
+    @Override
+    public Double convertValue(UnitType unit, double valueOfUnit) {
+
+        if (unit == UnitType.FAHRENHEIT) {
+            return (valueOfUnit - unit.returnValue()) * 5 / 9;
+        }
+        return valueOfUnit * unit.returnValue();
     }
 
-    public boolean compare(QuantityMeasurement that) throws QuantityMeasurementException
-    {
-        if (!this.unit.getClass().equals(that.unit.getClass()))
-            throw new QuantityMeasurementException("parameter units are of two different type", QuantityMeasurementException.ExceptionType.UNIT_NOT_COMPARABLE);
-        Double firstValue = this.unit.convertValue(this.value);
-        Double secondValue = that.unit.convertValue(that.value);
-        return (Double.compare(Math.round(firstValue), Math.round(secondValue)) == 0);
-    }
-
-    public Double additionOfTwoUnits(QuantityMeasurement that) throws QuantityMeasurementException
-    {
-        if (this.unit.getClass().getName().equals(UnitOfTemperature.class.getName()) | that.unit.getClass().getName().equals(UnitOfTemperature.class.getName()))
-            throw new QuantityMeasurementException("parameter units cant be added", QuantityMeasurementException.ExceptionType.UNIT_NOT_ADDABLE);
-        Double firstValue = this.unit.convertValue(this.value);
-        Double secondValue = that.unit.convertValue(that.value);
-        return (firstValue + secondValue);
+    public boolean compare(double value1, double value2) {
+        return Double.compare(value1, value2) == 0;
     }
 
     @Override
-    public boolean equals(Object o)
-    {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        QuantityMeasurement quantityMeasurement = (QuantityMeasurement) o;
-        return Double.compare(quantityMeasurement.value, value) == 0 &&
-                unit == quantityMeasurement.unit;
+    public boolean equals(Object o) {
+        if (this == o) return true;         //ref check
+        if (o == null || getClass() != o.getClass()) return false;      //null n type
+        QuantityMeasurement quantityMeasurement = (QuantityMeasurement) o;  //converting obj param to type of QM
+        return this.compare(quantityMeasurement.value, value);      //value check
     }
 }
 
